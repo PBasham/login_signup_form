@@ -1,0 +1,68 @@
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    width: clamp(200px, 40vw, 400px);
+    background-color: rgba(0, 0, 0, 0.714);
+    border-radius: 15px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    padding-bottom: 0;
+}
+
+.form-container form label {
+    margin-bottom: .25em;
+
+    color: white;
+}
+
+.form-container form input {
+    margin-bottom: 1em;
+    padding: 5px 8px;
+}
+
+
+.btn {
+    padding: 5px 8px;
+    border: none;
+}
+.btn:is(:hover,:active) {
+    /* need color for this and change */
+}
+.auth-btn {
+    /* margin-top: 1em; */
+    align-self: center;
+    margin: 1em 0;
+    
+    width: min(50vw, 100px);
+    border-radius: 15px;
+}
+.not-a-user-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1em;
+}
+
+.not-a-user-div p {
+    display: flex;
+}
+.auth-form-link {
+    margin-left: .5em;
+    color: rgb(6, 6, 204);
+    text-decoration: underline;
+}
+.auth-form-link:is(:hover,:active) {
+    color: purple;
+    cursor: pointer;
+}

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 // Components --------------------------------------------------
 import LoginForm from "../components/Auth/LoginForm.jsx"
 import SignUpForm from "../components/Auth/SignUpForm.jsx"
+// styling/misc --------------------------------------------------
+import "../css/Auth.css"
 
 const AuthPage = (props) => {
     const { setUser } = props
