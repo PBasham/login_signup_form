@@ -6,12 +6,11 @@
     font: inherit;
 }
 html { /* color-scheme: light dark; */ }
-body { min-height: 100vh; }
+body { min-height: 100vh;}
 img, picture, svg, video {
     display: block;
     max-width: 100%;
 }
 
-.app {
-    
+.App {
 }
