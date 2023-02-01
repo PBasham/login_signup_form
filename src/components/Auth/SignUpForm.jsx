@@ -32,6 +32,7 @@ const SignUpForm = (props) => {
             method: "POST",
             // mode: "no-cors",
             headers: {
+                "Content-Type": "application/json",
                 email: credentials.email,
                 code_path: "CHECK_EMAIL",
             }
