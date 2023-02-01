@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import * as usersServices from "../../utilities/users-services"
+
 const LoginForm = (props) => {
 
     const { setUser, updateShowLogin } = props
@@ -22,21 +24,19 @@ const LoginForm = (props) => {
     const handleSubmit = async (evt) => {
         evt.preventDefault()
         console.log(credentials)
+
+
+
         const options = {
-            method: "POST",
-            // mode: "no-cors",
-            headers: {
-                email: credentials.email,
-                password: credentials.password,
-            }
+            email: credentials.email,
+            password: credentials.password,
         }
+
+        // login(options)
+
         try {
-            // go to page for verification code?
-            //? Q: How do these endpoint work, which points to which?
-            // ? I see that /User logs in
-            const response = await fetch("https://sicdemo.thedatagroup.io/api/User", options)
-            console.log("Response")
-            console.log(response)
+            const user = await usersServices.login(options)
+            setUser(user)
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
             setError(`Temp Message: Something went wrong.`)

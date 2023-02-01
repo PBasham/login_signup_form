@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-// import { request } from "express"
+
+import * as usersServices from "../../utilities/users-services"
 
 const SignUpForm = (props) => {
 
@@ -29,17 +30,11 @@ const SignUpForm = (props) => {
         evt.preventDefault()
         console.log(credentials)
         const options = {
-            method: "POST",
-            // mode: "no-cors",
-            headers: {
-                "Content-Type": "application/json",
-                email: credentials.email,
-                code_path: "CHECK_EMAIL",
-            }
+            email: credentials.email,
+            code_path: "CHECK_EMAIL",
         }
         try {
-            const response = await fetch("https://sicdemo.thedatagroup.io/api/CheckEmail", options)
-            console.log("Response")
+            const response = await usersServices.emailConfirmation(options)
             console.log(response)
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
@@ -54,7 +49,7 @@ const SignUpForm = (props) => {
                 {/* <label>Full Name</label> */}
                 <input type="name" name="full_name" placeholder="Full Name" value={credentials.full_name} onChange={handleFormOnChange} required />
                 {/* <label>Password</label> */}
-                <input type="password" name="password" placeholder="password" value={credentials.password} onChange={handleFormOnChange} required />
+                <input type="password" name="new_password" placeholder="password" value={credentials.new_password} onChange={handleFormOnChange} required />
                 <p className="password-message">Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
                 <button type="submit" className="btn auth-btn">Create Account</button>
                 <p className="error-message">{error}</p>
