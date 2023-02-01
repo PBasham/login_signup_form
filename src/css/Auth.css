@@ -8,8 +8,10 @@
 
 .form-container {
     width: clamp(200px, 40vw, 400px);
-    background-color: rgba(0, 0, 0, 0.714);
+    background-color: rgba(255, 255, 255, 1);
     border-radius: 15px;
+
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.191);
 }
 
 .form-container form {
@@ -22,30 +24,52 @@
 .form-container form label {
     margin-bottom: .25em;
 
-    color: white;
+    color: var(--color-blue);
 }
 
 .form-container form input {
-    margin-bottom: 1em;
+    margin-top: 1.5em;
     padding: 5px 8px;
+    
+    
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-width: 2px;
+    border-bottom-color: var(--color-lightgrey);
+    
+    outline: none;
+    transition: 200ms ease-in-out;
 }
-
+.form-container form input:is(:active,:focus) {
+    border-bottom-color: var(--color-blue);
+    border-bottom-width: 3px;
+}
 
 .btn {
     padding: 5px 8px;
-    border: none;
+    background-color: transparent;
+    
+    color: var(--color-blue);
+    border-color: var(--color-blue);
 }
-.btn:is(:hover,:active) {
+
+.btn:is(:hover, :active, :focus) {
     /* need color for this and change */
+    background-color: var(--color-blue);
+    color: white;
+    transition: 200ms ease-in-out;
 }
+
 .auth-btn {
     /* margin-top: 1em; */
     align-self: center;
     margin: 1em 0;
-    
+
     width: min(50vw, 150px);
     border-radius: 15px;
 }
+
 .not-a-user-div {
     display: flex;
     justify-content: center;
@@ -57,12 +81,32 @@
 .not-a-user-div p {
     display: flex;
 }
+
 .auth-form-link {
     margin-left: .5em;
     color: rgb(6, 6, 204);
     text-decoration: underline;
 }
-.auth-form-link:is(:hover,:active) {
+
+.auth-form-link:is(:hover, :active) {
     color: purple;
     cursor: pointer;
+}
+
+.password-message {
+    margin-top: 1em;
+    padding: 0 .2em;
+    
+    text-align: center;
+    font-size: .9rem;
+    color: var(--color-lightgrey);
+}
+
+.password-message.pass-error {
+    color: red;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
 }

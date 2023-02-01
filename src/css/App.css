@@ -1,3 +1,7 @@
+:root {
+    --color-blue: rgba(39, 39, 229, 1);
+    --color-lightgrey: rgb(126, 126, 126);
+}
 /* ==== CSS RESET ==================== */
 *, *::before, *::after { box-sizing: border-box; }
 * {
@@ -6,7 +10,11 @@
     font: inherit;
 }
 html { /* color-scheme: light dark; */ }
-body { min-height: 100vh;}
+body { 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    min-height: 100vh; 
+    background-color: lightgray;
+}
 img, picture, svg, video {
     display: block;
     max-width: 100%;
