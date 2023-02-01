@@ -65,7 +65,7 @@ const SignUpForm = (props) => {
                 <input type="name" name="full_name" value={credentials.full_name} onChange={handleFormOnChange} required />
                 <label>Password</label>
                 <input type="password" name="password" value={credentials.password} onChange={handleFormOnChange} required />
-                <button type="submit" className="btn auth-btn">Log In</button>
+                <button type="submit" className="btn auth-btn">Create Account</button>
                 <p>{error}</p>
             </form>
             <div className="not-a-user-div">

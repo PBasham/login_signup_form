@@ -43,7 +43,7 @@
     align-self: center;
     margin: 1em 0;
     
-    width: min(50vw, 100px);
+    width: min(50vw, 150px);
     border-radius: 15px;
 }
 .not-a-user-div {
