@@ -1,4 +1,14 @@
-import { getDepOptimizationConfig } from "vite"
+/*========================================
+        This will have functions for login,signup,verify ect..
+========================================*/
+
+// check if email exist in database
+
+// check if verification code is correct
+
+// register the user
+
+// verify & login the user
 
 
 // user-services helper functions --------------------------------------------------
