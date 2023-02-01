@@ -1,3 +1,4 @@
+import { getDepOptimizationConfig } from "vite"
 
 
 // user-services helper functions --------------------------------------------------
@@ -11,4 +12,10 @@ export function getToken() {
         return null
     }
     return token
+}
+
+export function getUser() {
+    console.log("--I've reached getUser in users-services")
+    const token = getToken()
+    return token ? JSON.parse(window.atob(token.split(".")[1])).user : null
 }
