@@ -36,6 +36,8 @@ const LoginForm = (props) => {
 
         try {
             const user = await usersServices.login(options)
+            console.log("user")
+            console.log(user)
             setUser(user)
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
@@ -47,9 +49,9 @@ const LoginForm = (props) => {
         <div className="form-container">
             <form autoComplete="on" onSubmit={handleSubmit}>
                 {/* <label>Email</label> */}
-                <input type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
+                <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
                 {/* <label>Password</label> */}
-                <input type="password" name="password" placeholder="password" value={credentials.password} onChange={handleFormOnChange} required />
+                <input className="form-input" type="password" name="password" placeholder="password" value={credentials.password} onChange={handleFormOnChange} required />
                 <button type="submit" className="btn auth-btn">Log In</button>
                 <p className="error-message">{error}</p>
             </form>

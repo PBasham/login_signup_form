@@ -8,7 +8,7 @@ import "../css/Auth.css"
 const AuthPage = (props) => {
     const { setUser } = props
     const [showLogin, setShowLogin] = useState(true)
-    
+
     // this will toggle between login / signup form
     const updateShowLogin = () => {
         setShowLogin(!showLogin)
@@ -36,6 +36,7 @@ const AuthPage = (props) => {
                 <LoginForm setUser={setUser} updateShowLogin={updateShowLogin} />
                 :
                 <SignUpForm setUser={setUser} updateShowLogin={updateShowLogin} />
+                
             }
         </div>
     )

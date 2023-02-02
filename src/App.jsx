@@ -14,7 +14,7 @@ function App() {
     return (
         <div className="App">
             {user ?
-                null // loggedIn Page
+                <h1>You've logged in!</h1>
                 :
                 <AuthPage setUser={setUser} />
             }
