@@ -81,9 +81,7 @@ const SignUpForm = (props) => {
         // check if the password has everything needed to pass check
         let passRGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         let result = passRGEX.test(evt.target.value)
-        console.log(result)
         setPasswordValid(result)
-        // return result
     }
 
 
