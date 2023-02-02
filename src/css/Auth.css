@@ -130,13 +130,14 @@
     color: var(--color-lightgrey);
 }
 
-.password-message.pass-error {
+/* .password-message */
+.pass-error {
     color: red;
 }
 
 .error-message {
     margin: .5em 0;
-    
+
     color: red;
     text-align: center;
 }

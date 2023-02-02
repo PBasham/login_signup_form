@@ -1,3 +1,7 @@
+/** TODO
+ * login -- Password takes hmac sha512 hash
+ * register new_hase takes hmac sha512 hash
+ */
 /*========================================
         This will have functions for login,signup,verify ect..
 ========================================*/
@@ -15,8 +19,6 @@ export async function emailConfirmation(userData) {
     // { email: "", code_path: "CHECK_CODE", verification_code: ""}
     // Checks if a verificaton code is valid
     const response = await usersAPI.emailConfirmation(userData)
-    console.log("Response:")
-    console.log(response)
     // then this would call registerUser?
     return response
 }
@@ -33,22 +35,12 @@ export async function login(userCredentials) {
     // {email: "", password: ""}
     console.log("==users-services login()==")
     const token = await usersAPI.login(userCredentials)
-    console.log("i've arrived here now")
     if (token.email === userCredentials.email) {
-        console.log("Yes")
         // if this user exist then create JWT for them and return that token
-
-        console.log(token)
-        console.log("we are here")
         localStorage.setItem("token", JSON.stringify(token))
     } else {
-        console.log("no")
         throw new Error()
     }
-
-
-    console.log(token)
-    // console.log(token.email)
 
     return getUser()
 }
@@ -58,19 +50,15 @@ export async function login(userCredentials) {
 export function getToken() {
     console.log("==users-services getToken()==")
     const token = localStorage.getItem("token")
-    console.log("step 1: ")
     if (!token) {
-        console.log("step 2")
         return null
 
     }
-    console.log("step return")
     return token
 }
 
 export function getUser() {
     console.log("==users-services getUser()==")
     const token = getToken()
-    console.log("End get user")
     return token ? JSON.parse(token).email : null
 }

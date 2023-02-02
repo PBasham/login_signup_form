@@ -4,7 +4,7 @@ import * as usersServices from "../../utilities/users-services"
 
 const SignUpForm = (props) => {
 
-    const { setUser, updateShowLogin } = props
+    const { setUser, updateShowLogin, hashPassword } = props
 
     const [waitingForVerification, setWaitingForVerification] = useState(false)
 
@@ -42,7 +42,7 @@ const SignUpForm = (props) => {
             }
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
-            setError(`TEMP MSG: There was an error creating an account.`)
+            setError(`TEMP MSG: There was an error creating the account.`)
         }
     }
 
@@ -68,6 +68,24 @@ const SignUpForm = (props) => {
 
     }
 
+    const handleRegisterUser = () => {
+        //todo hash password
+        //todo send user credentials with hashed password to the register function
+        //todo send the user email and hash pass to the login api, or just pass it through the users-services
+        //todo setUser
+    }
+
+    const [passwordValid, setPasswordValid] = useState(false)
+
+    const validatePass = (evt) => {
+        // check if the password has everything needed to pass check
+        let passRGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+        let result = passRGEX.test(evt.target.value)
+        console.log(result)
+        setPasswordValid(result)
+        // return result
+    }
+
 
     const disableBtn = !credentials.email.trim() || !credentials.new_password.trim() || !credentials.full_name.trim()
 
@@ -82,8 +100,13 @@ const SignUpForm = (props) => {
                         {/* <label>Full Name</label> */}
                         <input className="form-input" type="name" name="full_name" placeholder="Full Name" value={credentials.full_name} onChange={handleFormOnChange} required />
                         {/* <label>Password</label> */}
-                        <input className="form-input" type="password" name="new_password" placeholder="password" value={credentials.new_password} onChange={handleFormOnChange} required />
-                        <p className="password-message">Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
+                        <input className="form-input" type="password" name="new_password" placeholder="password" minLength={8} value={credentials.new_password}
+                            onChange={(evt) => {
+                                handleFormOnChange(evt)
+                                validatePass(evt)
+                            }}
+                            required />
+                        <p className={`password-message ${!passwordValid && credentials.new_password.trim() ? "pass-error" : null}`}>Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
                         <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Create Account</button>
                         <p className="error-message">{error}</p>
                     </form>

@@ -4,7 +4,7 @@ import * as usersServices from "../../utilities/users-services"
 
 const LoginForm = (props) => {
 
-    const { setUser, updateShowLogin } = props
+    const { setUser, updateShowLogin, hashPassword } = props
 
 
     const [credentials, setCredentials] = useState({
@@ -29,7 +29,7 @@ const LoginForm = (props) => {
 
         const options = {
             email: credentials.email,
-            password: credentials.password,
+            password: hashPassword(credentials.password),
         }
 
         // login(options)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { HmacSHA512 } from "crypto-js"
 // Components --------------------------------------------------
 import LoginForm from "../components/Auth/LoginForm.jsx"
 import SignUpForm from "../components/Auth/SignUpForm.jsx"
@@ -12,6 +13,11 @@ const AuthPage = (props) => {
     // this will toggle between login / signup form
     const updateShowLogin = () => {
         setShowLogin(!showLogin)
+    }
+
+    const hashPassword = (password) => {
+        let secret = "testSecretForHashing"
+        return HmacSHA512(password, secret).toString()
     }
 
     /** Order of Operations
@@ -33,10 +39,10 @@ const AuthPage = (props) => {
     return (
         <div className="form-wrapper">
             {showLogin ?
-                <LoginForm setUser={setUser} updateShowLogin={updateShowLogin} />
+                <LoginForm setUser={setUser} updateShowLogin={updateShowLogin} hashPassword={hashPassword} />
                 :
-                <SignUpForm setUser={setUser} updateShowLogin={updateShowLogin} />
-                
+                <SignUpForm setUser={setUser} updateShowLogin={updateShowLogin} hashPassword={hashPassword} />
+
             }
         </div>
     )
