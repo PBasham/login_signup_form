@@ -8,6 +8,7 @@ const SignUpForm = (props) => {
 
     const [waitingForVerification, setWaitingForVerification] = useState(false)
 
+    const [verCodeError, setVerCodeError] = useState(false)
 
     const [credentials, setCredentials] = useState({
         email: "",
@@ -36,35 +37,69 @@ const SignUpForm = (props) => {
         try {
             const response = await usersServices.checkEmail(credentials.email)
             console.log(response)
+            if (response === "NOT_EXISTS") {
+                setWaitingForVerification(true)
+            }
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
-            setError(`TEMP MSG: There was an error.`)
+            setError(`TEMP MSG: There was an error creating an account.`)
         }
     }
+
+    const checkVerificationCode = async (evt) => {
+        evt.preventDefault()
+        console.log(credentials.verification_code)
+
+        const payload = {
+            email: credentials.email,
+            code_path: "CHECK_CODE",
+            verification_code: credentials.verification_code,
+        }
+
+        try {
+            const response = await usersServices.emailConfirmation(payload)
+            if (response === "FAILURE") {
+                setVerCodeError(true)
+                setError("Verification Code is invalid.")
+            }
+        } catch {
+
+        }
+
+    }
+
 
     const disableBtn = !credentials.email.trim() || !credentials.new_password.trim() || !credentials.full_name.trim()
 
     return (
         <div className="form-container">
-            {!waitingForVerification ? <>
-                <form autoComplete="on" onSubmit={handleSubmit}>
-                    {/* <label>Email</label> */}
-                    <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
-                    {/* <label>Full Name</label> */}
-                    <input className="form-input" type="name" name="full_name" placeholder="Full Name" value={credentials.full_name} onChange={handleFormOnChange} required />
-                    {/* <label>Password</label> */}
-                    <input className="form-input" type="password" name="new_password" placeholder="password" value={credentials.new_password} onChange={handleFormOnChange} required />
-                    <p className="password-message">Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
-                    <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Create Account</button>
-                    <p className="error-message">{error}</p>
-                </form>
-                <div className="not-a-user-div">
-                    <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Log In</span></p>
-                </div>
-            </>
+            {!waitingForVerification ?
+                // make this a component as well?
+                <>
+                    <form autoComplete="on" onSubmit={handleSubmit}>
+                        {/* <label>Email</label> */}
+                        <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
+                        {/* <label>Full Name</label> */}
+                        <input className="form-input" type="name" name="full_name" placeholder="Full Name" value={credentials.full_name} onChange={handleFormOnChange} required />
+                        {/* <label>Password</label> */}
+                        <input className="form-input" type="password" name="new_password" placeholder="password" value={credentials.new_password} onChange={handleFormOnChange} required />
+                        <p className="password-message">Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
+                        <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Create Account</button>
+                        <p className="error-message">{error}</p>
+                    </form>
+                    <div className="alt-form-div">
+                        <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Log In</span></p>
+                    </div>
+                </>
                 :
-                <div>
-
+                // Turn this into a component
+                <div className="verification-div">
+                    <h1>A verification code has been sent to your email.</h1>
+                    <form autoComplete="off" onSubmit={checkVerificationCode} >
+                        <input className={`form-input ${verCodeError ? "input-error" : null}`} type="text" name="verification_code" placeholder="Verification Code" value={credentials.verification_code} onChange={handleFormOnChange} required />
+                        <p className="error-message">{error}</p>
+                        <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Continue</button>
+                    </form>
                 </div>
             }
         </div>

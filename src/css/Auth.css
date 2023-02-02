@@ -7,16 +7,23 @@
 }
 
 .form-container {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 300px;
     width: clamp(200px, 40vw, 400px);
     background-color: rgba(255, 255, 255, 1);
     border-radius: 15px;
 
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.191);
+    transition: 200ms ease-in-out;
 }
 
 .form-container form {
     display: flex;
+    position: relative;
     flex-direction: column;
+    /* align-items: center; */
     padding: 2em;
     padding-bottom: 0;
 }
@@ -28,28 +35,41 @@
 }
 
 .form-input {
+    position: relative;
+    top: 0;
+
     margin-top: 1.5em;
     padding: 5px 8px;
-    
-    
+    /* width: 100%; */
+
+
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom-width: 2px;
     border-bottom-color: var(--color-lightgrey);
-    
+
+    text-align: center;
+
+    transition: ease-in-out 200ms;
     outline: none;
-    transition: 200ms ease-in-out;
 }
-.form-container form input:is(:active,:focus) {
+
+.form-input:is(:active, :focus) {
+    top: -2px;
+
     border-bottom-color: var(--color-blue);
-    border-bottom-width: 3px;
+}
+
+.input-error {
+    background-color: var(--color-errorBg);
+    border-bottom-color: var(--color-errorBr);
 }
 
 .btn {
     padding: 5px 8px;
     background-color: transparent;
-    
+
     color: var(--color-blue);
     border: 2px solid var(--color-blue);
     /* border-color: var(--color-blue); */
@@ -61,11 +81,13 @@
     color: white;
     transition: 200ms ease-in-out;
 }
+
 .btn.disabledBtn {
     color: white;
     background-color: var(--color-lightgrey);
     border-color: var(--color-lightgrey);
 }
+
 .auth-btn {
     /* margin-top: 1em; */
     align-self: center;
@@ -75,15 +97,16 @@
     border-radius: 15px;
 }
 
-.not-a-user-div {
+.alt-form-div {
     display: flex;
     justify-content: center;
-    align-items: center;
-
+    
+    margin-top: auto;
     padding: 1em;
+
 }
 
-.not-a-user-div p {
+.alt-form-div p {
     display: flex;
 }
 
@@ -101,7 +124,7 @@
 .password-message {
     margin-top: 1em;
     padding: 0 .2em;
-    
+
     text-align: center;
     font-size: .9rem;
     color: var(--color-lightgrey);
@@ -112,6 +135,25 @@
 }
 
 .error-message {
+    margin: .5em 0;
+    
     color: red;
+    text-align: center;
+}
+
+/* Verificaton div -------------------------------------------------- */
+.verification-div {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    padding: 2em;
+    padding-bottom: 0;
+}
+.verification-div form {
+}
+.verification-div h1 {
+    /* margin: 1em 0; */
+
+    font-size: 1.5rem;
     text-align: center;
 }

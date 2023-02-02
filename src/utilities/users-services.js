@@ -8,8 +8,7 @@ export async function checkEmail(userEmail) {
     // { email: "", code_path: "CHECK_EMAIL"}
     // check if an account in the database has that email address, if it doesn't, sends a verification code to the email
     const response = await usersAPI.checkEmail(userEmail)
-    console.log("Response:")
-    console.log(response)
+    return response
 }
 // check if verification code is correct
 export async function emailConfirmation(userData) {
@@ -18,6 +17,8 @@ export async function emailConfirmation(userData) {
     const response = await usersAPI.emailConfirmation(userData)
     console.log("Response:")
     console.log(response)
+    // then this would call registerUser?
+    return response
 }
 
 // register the user

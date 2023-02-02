@@ -18,6 +18,7 @@ export function checkEmail(userEmail) {
 }
 
 export function emailConfirmation(userData) {
+    console.log(userData)
     return sendRequest(`${BASE_URL}/EmailConfirmation`, "POST", userData)
 }
 export function registerUser(userData) {

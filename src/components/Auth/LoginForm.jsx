@@ -49,13 +49,17 @@ const LoginForm = (props) => {
         <div className="form-container">
             <form autoComplete="on" onSubmit={handleSubmit}>
                 {/* <label>Email</label> */}
+                {/* <div className="temp"> */}
                 <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
+                {/* </div> */}
                 {/* <label>Password</label> */}
+                {/* <div className="temp"> */}
                 <input className="form-input" type="password" name="password" placeholder="password" value={credentials.password} onChange={handleFormOnChange} required />
+                {/* </div> */}
                 <button type="submit" className="btn auth-btn">Log In</button>
                 <p className="error-message">{error}</p>
             </form>
-            <div className="not-a-user-div">
+            <div className="alt-form-div">
                 <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Sign Up</span></p>
             </div>
         </div>
