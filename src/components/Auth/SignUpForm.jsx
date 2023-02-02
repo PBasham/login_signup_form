@@ -87,7 +87,7 @@ const SignUpForm = (props) => {
     }
 
 
-    const disableBtn = !credentials.email.trim() || !credentials.new_password.trim() || !credentials.full_name.trim()
+    const disableBtn = !credentials.email.trim() || !passwordValid || !credentials.full_name.trim()
 
     return (
         <div className="form-container">
