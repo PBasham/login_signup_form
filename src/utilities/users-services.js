@@ -1,7 +1,6 @@
 /*========================================
         This will have functions for login,signup,verify ect..
 ========================================*/
-
 import * as usersAPI from "./users-api.js"
 
 // check if email exist in database
@@ -33,13 +32,20 @@ export async function login(userCredentials) {
     // {email: "", password: ""}
     console.log("==users-services login()==")
     const token = await usersAPI.login(userCredentials)
+    console.log("i've arrived here now")
     if (token.email === userCredentials.email) {
-        // return token.email
+        console.log("Yes")
+        // if this user exist then create JWT for them and return that token
+
+        console.log(token)
+        console.log("we are here")
+        localStorage.setItem("token", JSON.stringify(token))
     } else {
-        // return null
+        console.log("no")
+        throw new Error()
     }
-    // if (token.email)
-    localStorage.setItem("token", token)
+
+
     console.log(token)
     // console.log(token.email)
 
@@ -55,27 +61,15 @@ export function getToken() {
     if (!token) {
         console.log("step 2")
         return null
-        
+
     }
-    console.log("step 3")
-    // const payload = JSON.parse(window.atob(token.split(".")))
-    // console.log("payload")
-    // console.log(payload)
-    // if (payload.exp < Date.now() / 1000) {
-    //     console.log("step 4")
-    //     localStorage.removeItem("token")
-    //     return null
-    // }
+    console.log("step return")
     return token
 }
 
 export function getUser() {
     console.log("==users-services getUser()==")
     const token = getToken()
-    if (token) {
-        console.log("There is a token")
-        console.log(JSON.parse(window.atob(token.split(".")[1])))
-    }
     console.log("End get user")
-    return token ? JSON.parse(window.atob(token.split(".")[1])).email : null
+    return token ? JSON.parse(token).email : null
 }
