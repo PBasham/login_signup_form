@@ -1,4 +1,5 @@
 :root {
+    --color-white: rgb(255, 255, 255);
     --color-blue: rgb(52, 52, 189);
     --color-lightgrey: rgb(126, 126, 126);
     --color-errorBg: rgba(223, 24, 24, .1);

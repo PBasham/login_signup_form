@@ -85,3 +85,7 @@ export function getUser() {
     const token = getToken()
     return token ? JSON.parse(token).email : null
 }
+
+export function logOut() {
+    localStorage.removeItem("token")
+}

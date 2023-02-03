@@ -63,37 +63,6 @@
 
 
 
-.btn {
-    padding: 5px 8px;
-    background-color: transparent;
-
-    color: var(--color-blue);
-    border: 2px solid var(--color-blue);
-    /* border-color: var(--color-blue); */
-}
-
-.btn:is(:hover, :active, :focus) {
-    /* need color for this and change */
-    background-color: var(--color-blue);
-    color: white;
-    transition: 200ms ease-in-out;
-}
-
-.btn.disabledBtn {
-    color: white;
-    background-color: var(--color-lightgrey);
-    border-color: var(--color-lightgrey);
-}
-
-.auth-btn {
-    /* margin-top: 1em; */
-    align-self: center;
-    margin: 1em 0;
-
-    width: min(50vw, 150px);
-    border-radius: 15px;
-}
-
 .alt-form-div {
     display: flex;
     justify-content: center;
