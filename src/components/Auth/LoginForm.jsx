@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 import * as usersServices from "../../utilities/users-services"
+// componants --------------------------------------------------
+import { ButtonOne } from "../Buttons/ButtonOne"
 
 const LoginForm = (props) => {
 
@@ -73,7 +75,8 @@ const LoginForm = (props) => {
                     value={credentials.password}
                     onChange={handleFormOnChange}
                     required />
-                <button type="submit" className="btn auth-btn">Log In</button>
+                    {/* <ButtonOne text={"Log In"} verson={"two"} onClick={handleSubmit}  style={"auth-btn"}/> */}
+                <button type="submit" className="btn auth-btn btn-v-two">Log In</button>
                 <p className="error-message error-text">{errorMsg}</p>
             </form>
             <div className="alt-form-div">

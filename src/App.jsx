@@ -4,6 +4,7 @@ import { useState } from "react"
 import AuthPage from "./pages/AuthPage"
 // styling/misc --------------------------------------------------
 import "./css/App.css"
+import "./css/pages/HomePage.css"
 import "./css/Buttons.css"
 import { getUser } from "./utilities/users-services"
 import HomePage from "./pages/HomePage"

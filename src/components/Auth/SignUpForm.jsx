@@ -167,7 +167,7 @@ const SignUpForm = (props) => {
                         </p>
                         <button
                             type="submit"
-                            className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`}
+                            className={`btn auth-btn btn-v-two ${disableBtn ? "disabledBtn" : null}`}
                             disabled={disableBtn}
                         >Create Account
                         </button>
@@ -184,7 +184,7 @@ const SignUpForm = (props) => {
                     <form autoComplete="off" onSubmit={checkVerificationCode} >
                         <input className={`form-input ${verCodeError ? "input-error" : null}`} type="text" name="verification_code" placeholder="Verification Code" value={credentials.verification_code} onChange={handleFormOnChange} required />
                         <p className="error-message">{errorMsg}</p>
-                        <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Continue</button>
+                        <button type="submit" className={`btn auth-btn btn-v-two ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Continue</button>
                         <p>{generalMsg}</p>
                         <p>Didn't recieve the code? <span className="auth-form-link" onClick={resendVerificationCode} >Resend code</span></p>
                     </form>

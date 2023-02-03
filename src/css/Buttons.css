@@ -8,11 +8,9 @@
     border-radius: 50px;
 
     text-align: center;
-    
+
     transition: 200ms ease-in-out;
 }
-
-.btn:is(:hover, :active, :focus) {}
 
 .btn-v-one {
     background-color: var(--color-blue);
@@ -43,22 +41,4 @@
 .auth-btn {
     align-self: center;
     margin: 1em 0;
-} */
-
-/* =========== */
-/* .btn {
-    padding: 5px 8px;
-    background-color: transparent;
-
-    color: var(--color-blue);
-    border: 2px solid var(--color-blue);
-}
-
-.btn:is(:hover, :active, :focus) {
-    background-color: var(--color-blue);
-    color: white;
-    transition: 200ms ease-in-out;
-}
-
-
-*/
+} 
