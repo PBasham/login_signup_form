@@ -35,14 +35,15 @@ export async function login(userCredentials) {
     // {email: "", password: ""}
     console.log("==users-services login()==")
     const token = await usersAPI.login(userCredentials)
-    if (token.email === userCredentials.email) {
+    console.log(token)
+    if (token.email === userCredentials.email && token.password === userCredentials.password) {
         // if this user exist then create JWT for them and return that token
-        localStorage.setItem("token", JSON.stringify(token))
+        // localStorage.setItem("token", JSON.stringify(token))
     } else {
         throw new Error()
     }
 
-    return getUser()
+    // return getUser()
 }
 
 
