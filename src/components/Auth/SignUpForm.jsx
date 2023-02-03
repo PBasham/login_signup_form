@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useResolvedPath } from "react-router-dom"
 
 import * as usersServices from "../../utilities/users-services"
+import { VerificationCodeForm } from "./VerificationCodeForm"
 
 const SignUpForm = (props) => {
 
@@ -33,20 +34,12 @@ const SignUpForm = (props) => {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
-        /** //! What Will i do?
-         * Step 1: Check the users email.
-         * Step 2: Send the user a verification code and move to that screen.
-         * Step 3: Check the verification code that the user provided to make sure that it matches the given code
-         * Step 4: register the user.
-         */
+        setErrorMsg("")
 
-        // Step 1
         try {
             const response = await usersServices.checkEmail(credentials.email)
             console.log(response)
             if (response === "NOT_EXISTS") {
-                // Step 2
-
 
                 if (sendVerificationCode()) {
                     setWaitingForVerification(true)
@@ -71,7 +64,6 @@ const SignUpForm = (props) => {
     const resendVerificationCode = () => {
         sendVerificationCode()
     }
-    // Step 3
     const checkVerificationCode = async (evt) => {
         evt.preventDefault()
         setErrorMsg("")
@@ -89,7 +81,6 @@ const SignUpForm = (props) => {
                 setErrorMsg("Verification Code is invalid.")
                 return
             }
-            // Step 4?
             handleRegisterUser()
 
         } catch {
@@ -103,13 +94,12 @@ const SignUpForm = (props) => {
         try {
 
             let response = await usersServices.registerUser(credentials)
-            console.log("response from registeruser")
-            console.log(response)
+            setWaitingForVerification(false)
+            updateShowLogin()
         } catch {
             console.log("Something went wrong???")
             setErrorMsg("There was an error creating account.")
         }
-        //todo setUser
     }
 
     const [passwordValid, setPasswordValid] = useState(false)
@@ -179,27 +169,16 @@ const SignUpForm = (props) => {
                 </>
                 :
                 // Turn this into a component
-                <div className="verification-div">
-                    <h1>A verification code has been sent to your email.</h1>
-                    <form autoComplete="off" onSubmit={checkVerificationCode} >
-                        <input
-                            className={`form-input ${verCodeError ? "input-error" : null}`}
-                            type="text"
-                            name="verification_code"
-                            placeholder="Verification Code"
-                            value={credentials.verification_code}
-                            onChange={handleFormOnChange}
-                            required />
-                        <p className="error-message">{errorMsg}</p>
-                        <button
-                            type="submit"
-                            className={`btn auth-btn btn-v-two ${disableBtn ? "disabledBtn" : null}`}
-                            disabled={disableBtn}
-                        >Continue</button>
-                        <p>{generalMsg}</p>
-                        <p>Didn't recieve the code? <span className="auth-form-link" onClick={resendVerificationCode} >Resend code</span></p>
-                    </form>
-                </div>
+                <VerificationCodeForm
+                    credentials={credentials}
+                    checkVerificationCode={checkVerificationCode}
+                    handleFormOnChange={handleFormOnChange}
+                    errorMsg={errorMsg}
+                    disableBtn={disableBtn}
+                    verCodeError={verCodeError}
+                    generalMsg={generalMsg}
+                    resendVerificationCode={resendVerificationCode}
+                />
             }
         </div>
     )
