@@ -12,10 +12,15 @@ const LoginForm = (props) => {
         password: "",
     })
 
-    const [error, setError] = useState("")
+    const [errorMsg, setErrorMsg] = useState("")
+    const [emailError, setEmailError] = useState(false)
+    const [passError, setPassError] = useState(false)
 
     const handleFormOnChange = (evt) => {
         // This isn't best practice but I will update to useRef
+        if (evt.target.name === "email" && emailError) setEmailError(false)
+        if (evt.target.name === "password" && passError) setPassError(false)
+
         setCredentials((current) => {
             return { ...current, [evt.target.name]: evt.target.value }
         })
@@ -23,25 +28,27 @@ const LoginForm = (props) => {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
-        console.log(credentials)
-
-
-
+        setErrorMsg("")
+        let userExist = await usersServices.checkEmail(credentials.email)
+        console.log("CheckEmail Response: ", userExist)
+        if (userExist === "NOT_EXISTS") {
+            setErrorMsg("There is no account registered with this email.")
+            setEmailError(true)
+            return
+        }
+        //! move this into users-services or api instaed of here??? Probably
         const options = {
             email: credentials.email,
-            password: hashPassword(credentials.password),
+            password: await hashPassword(credentials.password),
         }
-
-        // login(options)
 
         try {
             const user = await usersServices.login(options)
-            console.log("user")
-            console.log(user)
+            console.log("Login Response: ", user)
             setUser(user)
         } catch {
-            // set error for issue ie: "Login Failed" but make it actually a meaningful message
-            setError(`Temp Message: Something went wrong.`)
+            setPassError(true)
+            setErrorMsg(`Password was incorrect.`)
         }
     }
 
@@ -49,15 +56,25 @@ const LoginForm = (props) => {
         <div className="form-container">
             <form autoComplete="on" onSubmit={handleSubmit}>
                 {/* <label>Email</label> */}
-                {/* <div className="temp"> */}
-                <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
-                {/* </div> */}
+                <input
+                    className={`form-input ${emailError ? "input-error" : null}`}
+                    type="email"
+                    name="email"
+                    placeholder="yourEmail@email.com"
+                    value={credentials.email}
+                    onChange={handleFormOnChange}
+                    required />
                 {/* <label>Password</label> */}
-                {/* <div className="temp"> */}
-                <input className="form-input" type="password" name="password" placeholder="password" value={credentials.password} onChange={handleFormOnChange} required />
-                {/* </div> */}
+                <input
+                    className={`form-input ${passError ? "input-error" : null}`}
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    value={credentials.password}
+                    onChange={handleFormOnChange}
+                    required />
                 <button type="submit" className="btn auth-btn">Log In</button>
-                <p className="error-message">{error}</p>
+                <p className="error-message error-text">{errorMsg}</p>
             </form>
             <div className="alt-form-div">
                 <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Sign Up</span></p>

@@ -15,7 +15,7 @@ const AuthPage = (props) => {
         setShowLogin(!showLogin)
     }
 
-    const hashPassword = (password) => {
+    const hashPassword = async (password) => {
         let secret = "testSecretForHashing"
         return HmacSHA512(password, secret).toString()
     }

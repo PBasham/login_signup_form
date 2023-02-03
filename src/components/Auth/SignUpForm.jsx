@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useResolvedPath } from "react-router-dom"
 
 import * as usersServices from "../../utilities/users-services"
 
@@ -20,7 +21,8 @@ const SignUpForm = (props) => {
         additional_info_for_source: "",
     })
 
-    const [error, setError] = useState("")
+    const [errorMsg, setErrorMsg] = useState("")
+    const [generalMsg, setGeneralMsg] = useState("")
 
     const handleFormOnChange = (evt) => {
         // This isn't best practice but I will update to useRef
@@ -31,25 +33,48 @@ const SignUpForm = (props) => {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
-        // setWaitingForVerification(true)
-        // return
-        console.log(credentials)
+        /** //! What Will i do?
+         * Step 1: Check the users email.
+         * Step 2: Send the user a verification code and move to that screen.
+         * Step 3: Check the verification code that the user provided to make sure that it matches the given code
+         * Step 4: register the user.
+         */
+
+        // Step 1
         try {
             const response = await usersServices.checkEmail(credentials.email)
             console.log(response)
             if (response === "NOT_EXISTS") {
-                setWaitingForVerification(true)
+                // Step 2
+
+
+                if (sendVerificationCode()) {
+                    setWaitingForVerification(true)
+                } else {
+                    setErrorMsg("Error sending verification code")
+                    throw new Error()
+                }
+            } else {
+                setErrorMsg("An account with this email already exist.")
             }
         } catch {
             // set error for issue ie: "Login Failed" but make it actually a meaningful message
-            setError(`TEMP MSG: There was an error creating the account.`)
+            setErrorMsg(`TEMP MSG: There was an error creating the account.`)
         }
     }
 
+    const sendVerificationCode = async () => {
+        let response = await usersServices.sendVerificationCode({ email: credentials.email, code_path: "SEND_CODE_REGISTER" })
+        if (response === "CODE_SENT") return true
+        return false
+    }
+    const resendVerificationCode = () => {
+        sendVerificationCode()
+    }
+    // Step 3
     const checkVerificationCode = async (evt) => {
         evt.preventDefault()
-        console.log(credentials.verification_code)
-
+        setErrorMsg("")
         const payload = {
             email: credentials.email,
             code_path: "CHECK_CODE",
@@ -58,20 +83,32 @@ const SignUpForm = (props) => {
 
         try {
             const response = await usersServices.emailConfirmation(payload)
+            console.log(response)
             if (response === "FAILURE") {
                 setVerCodeError(true)
-                setError("Verification Code is invalid.")
+                setErrorMsg("Verification Code is invalid.")
+                return
             }
-        } catch {
+            // Step 4?
+            handleRegisterUser()
 
+        } catch {
+            setErrorMsg("Something went wrong while checking your verification code.")
         }
 
     }
 
-    const handleRegisterUser = () => {
-        //todo hash password
-        //todo send user credentials with hashed password to the register function
-        //todo send the user email and hash pass to the login api, or just pass it through the users-services
+    const handleRegisterUser = async () => {
+        credentials.new_hash = await hashPassword(credentials.new_password)
+        try {
+
+            let response = await usersServices.registerUser(credentials)
+            console.log("response from registeruser")
+            console.log(response)
+        } catch {
+            console.log("Something went wrong???")
+            setErrorMsg("There was an error creating account.")
+        }
         //todo setUser
     }
 
@@ -94,19 +131,47 @@ const SignUpForm = (props) => {
                 <>
                     <form autoComplete="on" onSubmit={handleSubmit}>
                         {/* <label>Email</label> */}
-                        <input className="form-input" type="email" name="email" placeholder="yourEmail@email.com" value={credentials.email} onChange={handleFormOnChange} required />
+                        <input
+                            className="form-input"
+                            type="email"
+                            name="email"
+                            placeholder="yourEmail@email.com"
+                            value={credentials.email} onChange={handleFormOnChange}
+                            required />
                         {/* <label>Full Name</label> */}
-                        <input className="form-input" type="name" name="full_name" placeholder="Full Name" value={credentials.full_name} onChange={handleFormOnChange} required />
+                        <input
+                            className="form-input"
+                            type="name"
+                            name="full_name"
+                            placeholder="Full Name"
+                            value={credentials.full_name} onChange={handleFormOnChange}
+                            required />
                         {/* <label>Password</label> */}
-                        <input className="form-input" type="password" name="new_password" placeholder="password" minLength={8} value={credentials.new_password}
+                        <input
+                            className={`form-input`}
+                            type="password"
+                            name="new_password"
+                            placeholder="password"
+                            minLength={8}
+                            value={credentials.new_password}
                             onChange={(evt) => {
                                 handleFormOnChange(evt)
                                 validatePass(evt)
                             }}
                             required />
-                        <p className={`password-message ${!passwordValid && credentials.new_password.trim() ? "pass-error" : null}`}>Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.</p>
-                        <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Create Account</button>
-                        <p className="error-message">{error}</p>
+                        <p
+                            className={`password-message 
+                            ${!passwordValid && credentials.new_password.trim() ? "error-text" : null} 
+                            ${passwordValid ? "success-text" : null}`}>
+                            Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.
+                        </p>
+                        <button
+                            type="submit"
+                            className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`}
+                            disabled={disableBtn}
+                        >Create Account
+                        </button>
+                        <p className="error-message">{errorMsg}</p>
                     </form>
                     <div className="alt-form-div">
                         <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Log In</span></p>
@@ -118,8 +183,10 @@ const SignUpForm = (props) => {
                     <h1>A verification code has been sent to your email.</h1>
                     <form autoComplete="off" onSubmit={checkVerificationCode} >
                         <input className={`form-input ${verCodeError ? "input-error" : null}`} type="text" name="verification_code" placeholder="Verification Code" value={credentials.verification_code} onChange={handleFormOnChange} required />
-                        <p className="error-message">{error}</p>
+                        <p className="error-message">{errorMsg}</p>
                         <button type="submit" className={`btn auth-btn ${disableBtn ? "disabledBtn" : null}`} disabled={disableBtn} >Continue</button>
+                        <p>{generalMsg}</p>
+                        <p>Didn't recieve the code? <span className="auth-form-link" onClick={resendVerificationCode} >Resend code</span></p>
                     </form>
                 </div>
             }

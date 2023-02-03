@@ -3,6 +3,10 @@
     --color-lightgrey: rgb(126, 126, 126);
     --color-errorBg: rgba(223, 24, 24, .1);
     --color-errorBr: rgba(223, 24, 24);
+    --color-errorMsg: rgba(223, 24, 24);
+    --color-successBg: rgba(5, 219, 76, 0.2);
+    --color-successBr: rgba(5, 219, 76);
+    --color-successMsg: rgb(5, 219, 76);
 }
 /* ==== CSS RESET ==================== */
 *, *::before, *::after { box-sizing: border-box; }

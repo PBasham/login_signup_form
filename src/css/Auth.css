@@ -61,10 +61,7 @@
     border-bottom-color: var(--color-blue);
 }
 
-.input-error {
-    background-color: var(--color-errorBg);
-    border-bottom-color: var(--color-errorBr);
-}
+
 
 .btn {
     padding: 5px 8px;
@@ -121,6 +118,7 @@
     cursor: pointer;
 }
 
+/* .password-message */
 .password-message {
     margin-top: 1em;
     padding: 0 .2em;
@@ -130,31 +128,34 @@
     color: var(--color-lightgrey);
 }
 
-/* .password-message */
-.pass-error {
-    color: red;
-}
 
 .error-message {
     margin: .5em 0;
-
-    color: red;
     text-align: center;
 }
-
+.error-text {
+    color: var(--color-errorMsg);
+}
+.success-text {
+    color: var(--color-successMsg);
+}
+.input-error {
+    background-color: var(--color-errorBg);
+    border-bottom-color: var(--color-errorBr);
+}
+.input-success {
+    background-color: var(--color-successBg);
+    border-bottom-color: var(--color-successBr);
+}
 /* Verificaton div -------------------------------------------------- */
 .verification-div {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
     padding: 2em;
     padding-bottom: 0;
 }
 .verification-div form {
 }
 .verification-div h1 {
-    /* margin: 1em 0; */
-
     font-size: 1.5rem;
     text-align: center;
 }
+/*  ============== */

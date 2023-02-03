@@ -6,9 +6,6 @@ import sendRequest from "./send-request";
 
 // set base url
 const BASE_URL = "https://sicdemo.thedatagroup.io/api"
-// const BASE_URL = "https://cors-anywhere.herokuapp.com/https://sicdemo.thedatagroup.io/api"
-
-// const BASE_URL = "/api"
 
 export function checkEmail(userEmail) {
     return sendRequest(`${BASE_URL}/CheckEmail`, "POST", {
@@ -21,15 +18,7 @@ export function emailConfirmation(userData) {
     return sendRequest(`${BASE_URL}/EmailConfirmation`, "POST", userData)
 }
 export function registerUser(userData) {
-    return sendRequest(`${BASE_URL}/Register`, "POST", {
-        email: "",
-        full_name: "",
-        new_password: "",
-        new_hash: "",
-        verification_code: "",
-        source_of_business: "unknown",
-        additional_info_for_source: "",
-    })
+    return sendRequest(`${BASE_URL}/Register`, "POST", userData)
 }
 export function login(userCredentials) {
     console.log("==users-api login()==")
