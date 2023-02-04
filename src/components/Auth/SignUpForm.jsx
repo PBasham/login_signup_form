@@ -141,27 +141,27 @@ const SignUpForm = (props) => {
                             value={credentials.full_name} onChange={handleFormOnChange}
                             required />
                         {/* <label>Password</label> */}
-                        <div className="input-pass-div">
-                        <input
-                            className={`form-input`}
-                            type={hidePass ? "password" : "text" }
-                            name="new_password"
-                            placeholder="password"
-                            minLength={8}
-                            value={credentials.new_password}
-                            onChange={(evt) => {
-                                handleFormOnChange(evt)
-                                validatePass(evt)
-                            }}
-                            required />
-                            <Icon className={`input-pass-icon ${!hidePass ? "icon-active" : null}`} icon={`${hidePass ? "ph:eye-slash" : "ph:eye-bold"}`} onClick={() => setHidePass(!hidePass)} />
-                            </div>
                         <p
                             className={`password-message 
                             ${!passwordValid && credentials.new_password.trim() ? "error-text" : null} 
                             ${passwordValid ? "success-text" : null}`}>
                             Password must be 8 characters long, contain 1 uppercase letter, symbol, and number.
                         </p>
+                        <div className="input-pass-div">
+                            <input
+                                className={`form-input`}
+                                type={hidePass ? "password" : "text"}
+                                name="new_password"
+                                placeholder="password"
+                                minLength={8}
+                                value={credentials.new_password}
+                                onChange={(evt) => {
+                                    handleFormOnChange(evt)
+                                    validatePass(evt)
+                                }}
+                                required />
+                            <Icon className={`input-pass-icon ${!hidePass ? "icon-active" : null}`} icon={`${hidePass ? "ph:eye-slash" : "ph:eye-bold"}`} onClick={() => setHidePass(!hidePass)} />
+                        </div>
                         <button
                             type="submit"
                             className={`btn auth-btn btn-v-two ${disableBtn ? "disabledBtn" : null}`}
