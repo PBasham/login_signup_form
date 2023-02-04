@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import * as usersServices from "../../utilities/users-services"
 // componants --------------------------------------------------
 import { ButtonOne } from "../Buttons/ButtonOne"
+// styling/misc --------------------------------------------------
+import { Icon } from '@iconify/react';
 
 const LoginForm = (props) => {
 
@@ -17,6 +19,8 @@ const LoginForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("")
     const [emailError, setEmailError] = useState(false)
     const [passError, setPassError] = useState(false)
+
+    const [hidePass, setHidePass] = useState(true)
 
     const handleFormOnChange = (evt) => {
         // This isn't best practice but I will update to useRef
@@ -67,20 +71,26 @@ const LoginForm = (props) => {
                     onChange={handleFormOnChange}
                     required />
                 {/* <label>Password</label> */}
-                <input
-                    className={`form-input ${passError ? "input-error" : null}`}
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    value={credentials.password}
-                    onChange={handleFormOnChange}
-                    required />
-                    {/* <ButtonOne text={"Log In"} verson={"two"} onClick={handleSubmit}  style={"auth-btn"}/> */}
+                <div className="input-pass-div">
+                    <input
+                        className={`form-input ${passError ? "input-error" : null}`}
+                        type={hidePass ? "password" : "text" }
+                        name="password"
+                        placeholder="password"
+                        value={credentials.password}
+                        onChange={handleFormOnChange}
+                        required />
+                    <Icon className={`input-pass-icon ${!hidePass ? "icon-active" : null}`} icon={`${hidePass ? "ph:eye-slash" : "ph:eye-bold"}`} onClick={() => setHidePass(!hidePass)} />
+                </div>
+                {/* <ButtonOne text={"Log In"} verson={"two"} onClick={handleSubmit}  style={"auth-btn"}/> */}
                 <button type="submit" className="btn auth-btn btn-v-two">Log In</button>
                 <p className="error-message error-text">{errorMsg}</p>
             </form>
             <div className="alt-form-div">
-                <p>Already signed up? <span className="auth-form-link" onClick={updateShowLogin}>Sign Up</span></p>
+                <p>Already signed up? <span className="auth-form-link" onClick={() => {
+                    updateShowLogin()
+                    setHidePass(true)
+                }}>Sign Up</span></p>
             </div>
         </div>
     )

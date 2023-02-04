@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { useResolvedPath } from "react-router-dom"
-
+// functions --------------------------------------------------
 import * as usersServices from "../../utilities/users-services"
+// components --------------------------------------------------
 import { VerificationCodeForm } from "./VerificationCodeForm"
+// styling/misc --------------------------------------------------
+import { Icon } from '@iconify/react';
 
 const SignUpForm = (props) => {
 
@@ -24,6 +26,8 @@ const SignUpForm = (props) => {
 
     const [errorMsg, setErrorMsg] = useState("")
     const [generalMsg, setGeneralMsg] = useState("")
+
+    const [hidePass, setHidePass] = useState(true)
 
     const handleFormOnChange = (evt) => {
         // This isn't best practice but I will update to useRef
@@ -137,9 +141,10 @@ const SignUpForm = (props) => {
                             value={credentials.full_name} onChange={handleFormOnChange}
                             required />
                         {/* <label>Password</label> */}
+                        <div className="input-pass-div">
                         <input
                             className={`form-input`}
-                            type="password"
+                            type={hidePass ? "password" : "text" }
                             name="new_password"
                             placeholder="password"
                             minLength={8}
@@ -149,6 +154,8 @@ const SignUpForm = (props) => {
                                 validatePass(evt)
                             }}
                             required />
+                            <Icon className={`input-pass-icon ${!hidePass ? "icon-active" : null}`} icon={`${hidePass ? "ph:eye-slash" : "ph:eye-bold"}`} onClick={() => setHidePass(!hidePass)} />
+                            </div>
                         <p
                             className={`password-message 
                             ${!passwordValid && credentials.new_password.trim() ? "error-text" : null} 

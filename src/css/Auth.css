@@ -26,6 +26,7 @@
     /* align-items: center; */
     padding: 2em;
     padding-bottom: 0;
+
 }
 
 .form-container form label {
@@ -40,7 +41,7 @@
 
     margin-top: 1.5em;
     padding: 5px 8px;
-    /* width: 100%; */
+    width: 100%;
 
 
     border-top: none;
@@ -127,4 +128,33 @@
     font-size: 1.5rem;
     text-align: center;
 }
-/*  ============== */
+.input-pass-div {
+    display: flex;
+    /* flex-direction: row; */
+    align-items: flex-end;
+
+    position: relative;
+    top: 0;
+}
+.input-pass-icon {
+    position: relative;
+    top: 0;
+
+    height: 25px;
+    width: 25px;
+    border-bottom: 2px solid var(--color-lightgrey);
+    
+    color: var(--color-lightgrey);
+
+    transition: ease-in-out 200ms;
+}
+.input-pass-icon:hover {
+    color: var(--color-blue);
+}
+.input-pass-div:focus-within .input-pass-icon {
+    top: -2px;
+    border-bottom-color: var(--color-blue);
+}
+.icon-active {
+    color: var(--color-blue);
+}
