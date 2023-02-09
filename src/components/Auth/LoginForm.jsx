@@ -42,7 +42,7 @@ const LoginForm = (props) => {
             setEmailError(true)
             return
         }
-        //! move this into users-services or api instaed of here??? Probably
+
         const options = {
             email: credentials.email,
             password: await hashPassword(credentials.password),

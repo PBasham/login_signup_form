@@ -2,12 +2,13 @@
 import { useState } from "react"
 // pages/components --------------------------------------------------
 import AuthPage from "./pages/AuthPage"
+import HomePage from "./pages/HomePage"
+
+import { getUser } from "./utilities/users-services"
 // styling/misc --------------------------------------------------
 import "./css/App.css"
 import "./css/pages/HomePage.css"
 import "./css/Buttons.css"
-import { getUser } from "./utilities/users-services"
-import HomePage from "./pages/HomePage"
 
 
 function App() {
